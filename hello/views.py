@@ -1,3 +1,4 @@
+from django.shortcuts import render
 import re
 from django.utils.timezone import datetime
 from django.http import HttpResponse
@@ -5,9 +6,19 @@ from django.http import HttpResponse
 def home(request):
     return HttpResponse("Hello, Django!")
 
+#def hello_there(request, name):
+#    now = datetime.now()
+#    formatted_now = now.strftime("%A, %d %B, %Y at %X")
 def hello_there(request, name):
-    now = datetime.now()
-    formatted_now = now.strftime("%A, %d %B, %Y at %X")
+    print(request.build_absolute_uri()) #optional
+    return render(
+        request,
+        'hello/hello_there.html',
+        {
+            'name': name,
+            'date': datetime.now()
+        }
+    )
 
     # Filter the name argument to letters only using regular expressions. URL arguments
     # can contain arbitrary text, so we restrict to safe characters only.
